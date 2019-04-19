@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DedalusWeb Story</title>
+
+    <script src="http://olado.github.io/doT/doT.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="./dedalus.js"></script>
+    <script src="./dedalus-web.js"></script>
+
+    <link rel="stylesheet" href="themes/plain/story.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+        
+        p {
+            color: red;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        html { 
+            background: url(backgrounds/retro-layout.png) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+ </head>
+<body>
+    <div id="story">
+        
+
+        <initscript>
+        </initscript>
+
+        <beforeEveryThing>
+        </beforeEveryThing>
+
+        <beforeEveryPageTurn>
+        </beforeEveryPageTurn>
+
+        <beforeEveryParagraphShown>
+        </beforeEveryParagraphShown>
+
+        <afterEveryThing>
+        </afterEveryThing>
+
+        <afterEveryPageTurn>
+        </afterEveryPageTurn>
+
+        <afterEveryParagraphShown>
+        </afterEveryParagraphShown>
+
+        <!-- Novel -->
+        <title>Journey Towards Better Security Practices</title>
+       
+        <!-- Objects -->
+        <obj id="dummyObject" inventoryName="An object">
+            <action id="Examine">
+                Something happens... who knows what?!
+            </action>
+
+            <action id="Get">
+                <when>!story.isInInventory('dummyObject')</when>
+                As you try to get it... It is clear that the inventory works!
+                {{ story.putInInventory('dummyObject'); }}
+            </action>
+
+        </obj>
+        <!-- Pages -->
+        <page id="intro">
+            <p style="font-weight: bold; font-size: 20px;">
+                You have just been hired as a security analyst for a massive and evil corporation that has recently been plagued with data leaks.
+            </p>
+            <p>
+                Your job is to find the source of the leaks and tighten up security.
+            </p>
+        </page>
+
+        <page id="firstPage" class="first">
+            <p>Click <turn to="firstTask">here</turn> to get started.</p>
+        </page>
+
+        <page id="firstTask">
+            <p>You decide that the first thing you will do is review the company's current security policies.</p>
+            <p>You could start with how <turn to="confData">confidential data</turn> is handled, or you could start with <turn to="passManagement">password management</turn>.</p>
+        </page>
+
+        <page id="confData">
+            <h3>Confidential Data</h3>
+            <p>
+                <turn to="accessPriv">Access privileges</turn> are the first thing you check in the security policy, 
+                so you can determine who had access to the leaked data.
+            </p>
+        </page>
+
+        <page id="passManagement">
+            <h3>Password Management</h3>
+        </page>
+
+        <page id="accessPriv">
+            <h3>Access Privileges</h3>
+            <p>You are shocked to see that the company is very loose about which employees can access what, with no restrictions placed on sensitive data.</p>
+            <p>
+                You decide to implement <show paragraph="rbac"> role-based access control</show> to better protect the company's data.
+            </p>
+            <paragraph id="rbac">
+                <p>Role-based access control groups employees based on their roles within an organization.</p>
+                <p>Each role will have assigned access control rules so employees only have access to data that they need to do their jobs.</p>
+                <p>Sensitive business data has the most resources allocated to protect it.</p>
+            </paragraph>
+        </page>
+
+        <page id="otherPage">
+            Plot twist! The story ends abruptly.
+            {{ story.endGame(); }}
+
+        </page>
+
+    </div>
+
+    <div id="wrapper">
+        <div id="title"></div>
+
+        <div id="inventoryHostWrapper">
+            <h2>Inventory</h2>
+            <div id="inventoryHost"></div>
+        </div>
+
+        <div id="host"></div>
+    </div>
+
+    <div id="interactionHost"></div>
+
+    <div id="undoStageHost"></div>
+
+    <div id="footer">
+        <a id="undoHost" href="#">Undo</a> &bull; <a id="saveHost" href="#">Save</a> &bull; <a id="restoreHost" href="#">Restore</a> &bull; <a id="resetHost" href="#">Reset</a>
+    </div>
+
+    <script>
+        $(function () {
+            new DedalusWeb({
+                domSource         : $('#story'),
+                domTarget         : $('#host'),
+                titleTarget       : $('#title'),
+                inventoryTarget   : $('#inventoryHost'),
+                interactionTarget : $('#interactionHost'),
+                undoTarget        : $('#undoHost'),
+                undoStageTarget   : $('#undoStageHost'),
+                saveTarget        : $('#saveHost'),
+                restoreTarget     : $('#restoreHost'),
+                resetTarget       : $('#resetHost'),
+            });
+        });
+
+    </script>
+
+</body>
+</html>
