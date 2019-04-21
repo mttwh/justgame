@@ -1,6 +1,5 @@
 
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const expressValidator = require('express-validator');
@@ -11,24 +10,10 @@ const passport = require('passport');
 const config = require('./config/database');
 
 
-
-mongoose.connect(config.database);
-let db = mongoose.connection;
-
-
 //Initialize app
 const app = express();
-//check connection
-db.once('open', function(){
-  console.log('Connected to MongoDB');
-});
 
 app.use(flash());
-
-//check for db errors
-db.on('error', function(err){
-  console.log(err);
-});
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
