@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const bcrypt = require('bcryptjs');
-
-var expressValidator = require('express-validator');
+const passport = require('passport');
+//const flash = require('connect-flash');
+const app = express();
+const expressValidator = require('express-validator');
 router.use(expressValidator());
+
 
 let User = require('../models/user');
 
@@ -45,7 +48,7 @@ router.post('/register', function(req, res){
                     console.log(err);
                 }
                 newUser.password = hash;
-                newUser.save(function(err){
+                newUser.save(function(err, req){
                     if(err){
                         console.log(err);
                         return;
@@ -64,5 +67,14 @@ router.post('/register', function(req, res){
 router.get('/login', function(req, res){
     res.sendFile(path.join(__dirname + '/../public/login.html'));
 })
+
+//Login process
+router.post('/login', function(req, res, next){
+    passport.authenticate('local', {
+        successRedirect:'/',
+        failureRedirect:'/users/login',
+        //failureFlash: true
+    })(req, res, next);
+});
 
 module.exports = router;
